@@ -10,3 +10,18 @@ Original course materials can be found [here](https://app.pluralsight.com/librar
 
 TODO:
 
+## Introduction
+
+## Basic Scenarios
+
+## Setting Up Tests and Controlling Test Execution
+
+## Working with Data-driven Tests
+
+## Isolating Unit Tests with ASP.NET Core Techniques and Mocking
+
+## Unit Testing ASP.NET Core API Controllers
+
+## Unit Testing ASP.NET Core Middleware, Filters and Service Registrations
+
+## Integrating Unit Tests In Your Development and Release Flows
