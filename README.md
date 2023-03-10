@@ -219,7 +219,18 @@ can use `[InternalsVisibleTo]` attribute to make a private method visible to the
 
 ## Setting Up Tests and Controlling Test Execution
 
-TODO:
+_Constructor and dispose approach_ - set up test context in the constructor, potentially clean up in Dispose method (context is recreated for each test).
+
+_Class fixture approach_ - create a single test context shared among all tests in the class. Context is cleaned up after all tests in the class have been executed. Use when context creation and cleanup is expensive.
+
+_Class fixture_ - don't let a test depend on changes made to the context by other tests. Tests must remain isolated. You don't have control over the order in which tests are executed.
+
+_Collection fixture approach_ - create a single test context shared among tests in several test classes. Context is cleaned up after all tests across classes have been executed. Use when context creation and cleanup is expensive.
+
+Integrating test context with ASP.NET Core dependency injection container.
+
+In ASP.NET Core, dependencies are often resolved via the built-in IoC container. Can that be integrated with a unit test? Newing up dependencies is the preferred approach - simple, fast, concise. You might want to integrate
+with the DI system. If the class has got a lot of dependencies, if the dependency tree is large.
 
 ## Working with Data-driven Tests
 
@@ -233,6 +244,4 @@ TODO:
 
 ## Integrating Unit Tests In Your Development and Release Flows
 
-```
-
-```
+TODO: FluentAssertions
