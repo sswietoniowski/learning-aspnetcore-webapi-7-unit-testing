@@ -64,6 +64,8 @@ Good and Bad Candidates for a Unit Test:
 - good candidates: algorithms, behavior, rules,
 - bad candidates: data access, UI, system interactions.
 
+Usually you'll have a mix of unit tests, integration tests and functional tests. Majority of tests should be unit tests, then integration tests and finally (minority) functional tests.
+
 Naming Guidelines for Unit Tests:
 
 `CreateEmployee_ConstructInternalEmployee_SalaryMustBe2500`
