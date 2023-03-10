@@ -109,7 +109,113 @@ and extensibility. Encourages cleaner testing code.
 
 ## Basic Scenarios
 
-TODO:
+> _Assert_ is a boolean expression, used to verify the outcome of a test, that should evaluate to true.
+
+A test can contain on or more asserts:
+
+- fails when **one or more** asserts fail,
+- passes when **all** asserts pass.
+
+xUnit provides asserts for all common core testing scenarios.
+
+> A unit test should only contain one assert ...
+
+Quote by: "The strict school of thought" ;-)
+
+A unit is a small piece of behavior that you want to test. Multiple assertions in one test are acceptable if they
+assert the same behavior.
+
+> It's not about the amount of asserts you're using in a test, it's about the behavior you're testing.
+
+Different assertions examples.
+
+Asserts on booleans:
+
+```csharp
+Assert.True(true);
+Assert.False(false);
+```
+
+Asserts on strings:
+
+```csharp
+Assert.Equal("Hello", "Hello");
+Assert.NotEqual("Hello", "World");
+Assert.Contains("Hello", "Hello World");
+Assert.DoesNotContain("Hello", "World");
+Assert.StartsWith("Hello", "Hello World");
+Assert.EndsWith("World", "Hello World");
+Assert.Matches("Hello", "Hello World");
+Assert.DoesNotMatch("Hello", "World");
+```
+
+Asserts on numeric values:
+
+```csharp
+Assert.Equal(1, 1);
+Assert.NotEqual(1, 2);
+Assert.InRange(1, 0, 2);
+Assert.NotInRange(1, 2, 3);
+Assert.Greater(2, 1);
+Assert.GreaterOrEqual(2, 1);
+Assert.Less(1, 2);
+Assert.LessOrEqual(1, 2);
+```
+
+In case of floating point numbers, use `Assert.Equal` with a precision value:
+
+```csharp
+Assert.Equal(1.0, 1.0000000000000001, 5); // 5 is the precision, that is we are comparing up to 5 decimal places
+```
+
+Asserts on collections:
+
+```csharp
+Assert.Empty(new List<int>());
+Assert.NotEmpty(new List<int> { 1 });
+Assert.Contains(1, new List<int> { 1 });
+Assert.DoesNotContain(1, new List<int> { 2 });
+Assert.Single(new List<int> { 1 });
+Assert.NotSingle(new List<int> { 1, 2 });
+Assert.Equal(new List<int> { 1, 2 }, new List<int> { 1, 2 });
+Assert.NotEqual(new List<int> { 1, 2 }, new List<int> { 1, 3 });
+Assert.All(new List<int> { 1, 2 }, x => x > 0);
+Assert.NotAll(new List<int> { 1, 2 }, x => x > 0);
+```
+
+Asserts on exceptions:
+
+```csharp
+Assert.Throws<ArgumentNullException>(() => throw new ArgumentNullException());
+Assert.ThrowsAny<ArgumentNullException>(() => throw new ArgumentNullException());
+Assert.ThrowsAsync<ArgumentNullException>(async () => await Task.Run(() => throw new ArgumentNullException()));
+Assert.ThrowsAnyAsync<ArgumentNullException>(async () => await Task.Run(() => throw new ArgumentNullException()));
+```
+
+Asserts on events:
+
+```csharp
+Assert.Raises<EventArgs>(
+    handler => myObject.MyEvent += handler,
+    handler => myObject.MyEvent -= handler,
+    () => myObject.RaiseMyEvent());
+```
+
+Asserts on objects:
+
+```csharp
+Assert.Same(myObject, myObject);
+Assert.NotSame(myObject, new object());
+Assert.IsType<MyObject>(myObject);
+Assert.IsNotType<MyObject>(new object());
+Assert.IsAssignableFrom<MyObject>(myObject);
+Assert.IsNotAssignableFrom<MyObject>(new object());
+```
+
+Asserting on private methods. A private method is an implementation detail that doesn't exist in isolation. Test
+the behavior of the public method that uses the private method. Making a private method public just for testing
+purposes is a code smell (it violates the principle of encapsulation). As a slightly less bad alternative, you
+can use `[InternalsVisibleTo]` attribute to make a private method visible to the test assembly.
 
 ## Setting Up Tests and Controlling Test Execution
 
@@ -126,3 +232,7 @@ TODO:
 ## Unit Testing ASP.NET Core Middleware, Filters and Service Registrations
 
 ## Integrating Unit Tests In Your Development and Release Flows
+
+```
+
+```
