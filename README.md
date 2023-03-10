@@ -234,7 +234,100 @@ with the DI system. If the class has got a lot of dependencies, if the dependenc
 
 ## Working with Data-driven Tests
 
-TODO:
+Introducing Theories and Data-driven Tests
+
+> _Fact_ a test that is always true. They test invariant conditions.
+
+Instead of many tests with the same code, but different input data, you can use a single test with multiple input data sets. To do so we are replacing the `[Fact]` attribute with `[Theory]` attribute. `[Theory]` attribute is used to mark a test method as a data-driven test. `[Theory]` attribute can be used with `[InlineData]` attribute to provide input data for the test. `[InlineData]` attribute is used to provide input data for the test. `[InlineData]` attribute can be used multiple times to provide multiple input data sets for the test.
+
+> _Theory_ a test which is only true for a particular set of data.
+
+Example of a data-driven test:
+
+```csharp
+[Theory]
+[InlineData(1, 1, 2)]
+[InlineData(1, 2, 3)]
+[InlineData(2, 2, 4)]
+public void Add(int a, int b, int expected)
+{
+    Assert.Equal(expected, a + b);
+}
+```
+
+Use `TheoryData` for type-safe data-driven tests. We can use `[InlineData]`, `[MemberData]` and `[ClassData]` attributes to provide input data for the test. `[InlineData]` attribute is used to provide input data for the test. `[MemberData]` attribute is used to provide input data for the test from a static method or property. `[ClassData]` attribute is used to provide input data for the test from a class that implements `IEnumerable<object[]>` interface.
+
+Example of `[MemberData]` attribute:
+
+```csharp
+public static IEnumerable<object[]> Data =>
+    new List<object[]>
+    {
+        new object[] { 1, 1, 2 },
+        new object[] { 1, 2, 3 },
+        new object[] { 2, 2, 4 }
+    };
+```
+
+```csharp
+[Theory]
+[MemberData(nameof(Data))]
+public void Add(int a, int b, int expected)
+{
+    Assert.Equal(expected, a + b);
+}
+```
+
+Example of `[ClassData]` attribute:
+
+```csharp
+public class Data : IEnumerable<object[]>
+{
+    public IEnumerator<object[]> GetEnumerator()
+    {
+        yield return new object[] { 1, 1, 2 };
+        yield return new object[] { 1, 2, 3 };
+        yield return new object[] { 2, 2, 4 };
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+}
+```
+
+```csharp
+[Theory]
+[ClassData(typeof(Data))]
+public void Add(int a, int b, int expected)
+{
+    Assert.Equal(expected, a + b);
+}
+```
+
+Example of `TheoryData` (strongly typed):
+
+```csharp
+public class Data : TheoryData<int, int, int>
+{
+    public Data()
+    {
+        Add(1, 1, 2);
+        Add(1, 2, 3);
+        Add(2, 2, 4);
+    }
+}
+```
+
+```csharp
+[Theory]
+[ClassData(typeof(Data))]
+public void Add(int a, int b, int expected)
+{
+    Assert.Equal(expected, a + b);
+}
+```
+
+Getting data from an external source. Test data can come from an external source. Other people can manage it.
+Convenient for, for example, the QA team.
 
 ## Isolating Unit Tests with ASP.NET Core Techniques and Mocking
 
