@@ -45,7 +45,7 @@ Integration tests characteristics:
 - integration tests are relatively slow,
 - integration tests are not well encapsulated.
 
-> _Functional test_ is an automated test that tests the full request/response cycle of an application.
+> _Functional test_ is a (not necessarily automated) test that tests the full request/response cycle of an application.
 
 Functional tests can be automated with:
 
