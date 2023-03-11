@@ -385,7 +385,72 @@ Consider:
 
 ## Unit Testing ASP.NET Core API Controllers
 
-TODO:
+> Test the behavior you coded yourself. Don't test the framework.
+
+Code coverage and deciding what to unit test.
+
+Steer away from generalizations like "test everything", "don't test repositories", "test only the public API", etc.:
+
+- architectures, pattern implementations, ... often differ from project to project,
+- so-called best practices are sometimes diverted from, on purpose or accidentally.
+
+Trying to achieve 100% code coverage can be counterproductive. It's not about the number of tests, it's about the quality of tests.
+ROI from writing the last 10% might not be worth it.
+
+> A high code coverage percentage is not an indicator of success, or of code quality. A high code coverage percentage only truly represents the amount of code that is covered by tests.
+
+Controller Types:
+
+- _thick controllers_ - contain logic that implements the expected behavior; this is code that should be unit tested,
+- _thin or skinny controllers_ - delegate the actual implementation of the behavior to other components; these typically don't need to be unit tested.
+
+Introduction to testing MVC controllers.
+
+A variety of reasons can lead to choosing for thin or thick controllers, one isn't by definition better than the other.
+
+Can lead to a different decision in regards to whether controllers should be unit tested or not.
+
+You don't always have the luxury to decide:
+
+- you may get thrown into an existing project halfway through,
+- you may need to improve reliability of an existing, finished application by writing tests.
+
+Not every application is built with the same level of quality.
+
+Automated tests can improve an application's reliability (potentially on the way to refactoring). Taking a pragmatic approach to unit testing can be valuable.
+
+Test isolation is important, avoid model binding, filters, routing, ...
+
+What we can test:
+
+- expected return type,
+- expected type of the returned data,
+- expected values of the returned data,
+- other action logic that's not framework-related code.
+
+Concerns when unit testing controllers:
+
+- mocking controller dependencies,
+- working with `ModelState` in unit tests,
+- dealing with `TempData`,
+- dealing with `HttpContext.Session`,
+- working with `HttpClient` calls in tests,
+- ...
+
+> `HttpContext` an object which encapsulates all HTTP-specific information about an individual HTTP request: a container for a single request.
+
+Common information in `HttpContext`:
+
+- request,
+- response,
+- features (connection, server info, ...),
+- user,
+- session.
+
+Testing with `HttpContext`:
+
+- use the built-in default implementation: `DefaultHttpContext`,
+- use `Moq` for mocking: `Mock<HttpContext>`.
 
 ## Unit Testing ASP.NET Core Middleware, Filters and Service Registrations
 
