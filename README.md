@@ -503,4 +503,23 @@ Approach:
 
 ## Integrating Unit Tests In Your Development and Release Flows
 
-TODO: FluentAssertions
+Running tests with the CLI.
+
+> _Test runner_ - the program (or maybe a third party plugin to a program) that is responsible for looking for on or more assemblies with
+> tests in them and activating the test frameworks that it finds in those assemblies.
+>
+> _Test framework_ - the code that has detailed knowledge of how to discover and run unit tests.
+
+Running tests in parallel allows a set of tests to finish faster, locally and on your build server.
+
+Test runner - a runner can support running different test assemblies in parallel.
+
+Test framework - a framework can support running tests within a single assembly in parallel.
+
+Running tests against multiple target frameworks.
+
+xUnit supports running tests against multiple target frameworks, useful when developing frameworks or libraries. You want to ensure your library correctly functions across target frameworks.
+
+Integrating unit tests in your CI/CD pipeline.
+
+![Integrating unit tests in your CI/CD pipeline](./img/unit_tests_in_cicd_pipeline.jpg)
