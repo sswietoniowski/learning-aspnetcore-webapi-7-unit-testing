@@ -454,7 +454,52 @@ Testing with `HttpContext`:
 
 ## Unit Testing ASP.NET Core Middleware, Filters and Service Registrations
 
-TODO:
+Unit testing middleware.
+
+Test custom middleware, not built-in middleware.
+
+Dependencies that are difficult to mock can lead towards an integration test. Mostly
+though, a unit test is advisable for middleware testing.
+
+Typical concerns when unit testing middleware:
+
+- mock the `HttpContext` (or use `DefaultHttpContext`),
+- handle the `RequestDelegate`.
+
+> _ASP.NET Core filter_ - a filter allows code to run before or after specific stages in the request processing pipeline.
+
+Custom filters often handle cross-cutting concerns:
+
+- error handling,
+- caching.
+
+Filters can be used to avoid code duplication.
+
+Filters run in the ASP.NET Core action invocation pipeline. They can be used to:
+
+- action filter,
+- authorization filter,
+- resource filter,
+- exception filter,
+- result filter.
+
+Action filters:
+
+- run immediately before and after the action method is called,
+- can change the arguments passed to the action method,
+- can change the result returned from the action.
+
+Unit testing service registrations.
+
+Services are registered on ASP.NET Core's included IoC container.
+These registrations can be unit tested.
+
+Approach:
+
+- create an `IServiceCollection` instance,
+- register the services you want to test,
+- build an `IServiceProvider` instance,
+- verify whether the services are registered correctly.
 
 ## Integrating Unit Tests In Your Development and Release Flows
 
