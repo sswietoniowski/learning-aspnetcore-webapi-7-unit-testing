@@ -333,9 +333,63 @@ Convenient for, for example, the QA team.
 
 ## Isolating Unit Tests with ASP.NET Core Techniques and Mocking
 
+Investigating test isolation approaches.
+
+Unit tests should be isolated from other components of the system:
+
+- database, file system, network, etc.,
+- other dependencies like factories, repositories, services, etc.
+
+By isolating a test you can ber sure that when it passes or fails, it's the cause of the code under test.
+
+> _Test double_ a generic term for any case where you replace a production object for testing purposes.
+
+Test doubles:
+
+- _Fake_ a working implementation not suitable for production use,
+- _Dummy_ a test double that's never accessed or used,
+- _Stub_ a test double that provides fake data to the system under test,
+- _Spy_ a test double capable of capturing indirect output and providing indirect input as needed,
+- _Mock_ a test double that implements the expected behavior.
+
+Test isolation approaches:
+
+- manually creating test doubles,
+- using built-in framework or library functionality to create test doubles,
+- using a mocking framework to create test doubles.
+
+Different types of test doubles and different approaches are often combined. Focus on the fact that the test is isolated, no matter how.
+
+Unit testing with Entity Framework Core.
+
+EF Core contains a set of built-in functionalities to easily enable testing & test isolation:
+
+- avoid calling into a real database,
+- use in-memory implementations instead.
+
+_In-memory database provider_ - simple scenarios, not the best option.
+
+_SQLite in-memory mode_ - best compatibility with real databases.
+
+Unit testing with HttpClient.
+
+Tests mus be isolated from network calls. A custom message handler can short-circuit the actual call.
+
+Which test isolation approach should you use?
+
+Consider:
+
+- test reliability,
+- effort required to create test doubles,
+- available knowledge and experience.
+
 ## Unit Testing ASP.NET Core API Controllers
 
+TODO:
+
 ## Unit Testing ASP.NET Core Middleware, Filters and Service Registrations
+
+TODO:
 
 ## Integrating Unit Tests In Your Development and Release Flows
 
