@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  seq:
+    image: datalust/seq
+    container_name: seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - '5341:5341'
+      - '8080:80'
+  hr.api:
+    container_name: hr.api
+    build:
+      context: ./api/
+      dockerfile: ./Dockerfile
+    ports:
+      - '5001:5001'
+    depends_on:
+      - seq
+  management.api:
+    container_name: management.api
+    build:
+      context: ./external_api/
+      dockerfile: ./Dockerfile
+    ports:
+      - '5003:5003'
+    depends_on:
+      - seq
