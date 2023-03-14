@@ -8,7 +8,31 @@ Original course materials can be found [here](https://app.pluralsight.com/librar
 
 ## Setup
 
-TODO:
+First run external (Management) API:
+
+```cmd
+cd .\hr\external_api
+dotnet restore
+dotnet build
+dotnet watch run
+cd ..
+```
+
+Then run main (HR) API:
+
+```cmd
+cd .\hr\api
+dotnet restore
+dotnet build
+dotnet watch run
+cd ..
+```
+
+Or you can use Docker Compose and run the following command:
+
+```cmd
+docker-compose --file .\hr\docker-compose.yml --project-name hr up --build -d
+```
 
 ## Introduction
 
