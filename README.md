@@ -185,6 +185,13 @@ Assert.All(new List<int> { 1, 2 }, x => x > 0);
 Assert.NotAll(new List<int> { 1, 2 }, x => x > 0);
 ```
 
+Asserts on async tasks:
+
+```csharp
+Assert.Equal(1, await Task.Run(() => 1));
+Assert.NotEqual(1, await Task.Run(() => 2));
+```
+
 Asserts on exceptions:
 
 ```csharp
