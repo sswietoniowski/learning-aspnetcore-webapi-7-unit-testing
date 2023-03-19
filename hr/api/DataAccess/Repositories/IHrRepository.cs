@@ -1,6 +1,6 @@
 using Hr.Api.DataAccess.Entities;
 
-namespace Hr.Api.Services;
+namespace Hr.Api.DataAccess.Repositories;
 
 public interface IHrRepository
 {

@@ -1,8 +1,7 @@
-using Hr.Api.DataAccess;
 using Hr.Api.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Hr.Api.Services;
+namespace Hr.Api.DataAccess.Repositories;
 
 public class HrRepository : IHrRepository
 {
@@ -13,7 +12,7 @@ public class HrRepository : IHrRepository
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    public async Task<IEnumerable<InternalEmployee>> GetInternalEmployeesAsync() => 
+    public async Task<IEnumerable<InternalEmployee>> GetInternalEmployeesAsync() =>
         await _context.InternalEmployees
             .Include(e => e.AttendedCourses)
             .ToListAsync();

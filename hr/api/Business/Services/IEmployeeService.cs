@@ -1,18 +1,18 @@
-using Hr.Api.Business;
+using Hr.Api.Business.Events;
 using Hr.Api.DataAccess.Entities;
 
-namespace Hr.Api.Services;
+namespace Hr.Api.Business.Services;
 
 public interface IEmployeeService
 {
     event EventHandler<EmployeeIsAbsentEventArgs>? EmployeeIsAbsent;
 
-    InternalEmployee CreateInternalEmployee(string firstName, 
+    InternalEmployee CreateInternalEmployee(string firstName,
         string lastName);
     Task CreateInternalEmployeeAsync(InternalEmployee internalEmployee);
-    ExternalEmployee CreateExternalEmployee(string firstName, 
+    ExternalEmployee CreateExternalEmployee(string firstName,
         string lastName, string company);
-    Task<InternalEmployee> CreateInternalEmployeeAsync(string firstName, 
+    Task<InternalEmployee> CreateInternalEmployeeAsync(string firstName,
         string lastName);
     Task AttendCourseAsync(InternalEmployee employee, Course attendedCourse);
     InternalEmployee? GetInternalEmployeeById(Guid employeeId);

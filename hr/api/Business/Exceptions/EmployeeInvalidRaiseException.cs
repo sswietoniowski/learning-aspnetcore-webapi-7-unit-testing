@@ -1,4 +1,4 @@
-namespace Hr.Api.Business;
+namespace Hr.Api.Business.Exceptions;
 
 public class EmployeeInvalidRaiseException : Exception
 {

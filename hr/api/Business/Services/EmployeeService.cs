@@ -1,7 +1,7 @@
-using Hr.Api.Business;
+using Hr.Api.Business.Events;
 using Hr.Api.DataAccess.Entities;
 
-namespace Hr.Api.Services;
+namespace Hr.Api.Business.Services;
 
 public class EmployeeService : IEmployeeService
 {
