@@ -1,0 +1,5 @@
+# Exclude SQLite database files
+*.db
+# Exclude SQLite temporary files
+*.db-shm
+*.db-wal
