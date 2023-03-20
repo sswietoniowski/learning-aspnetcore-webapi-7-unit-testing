@@ -1,6 +1,8 @@
 namespace Hr.Api.Configurations.Extensions;
 
+using Hr.Api.Business.Services;
 using Hr.Api.DataAccess;
+using Hr.Api.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,9 +14,10 @@ public static class WebApplicationBuilderAddPersistenceExtension
         builder.Services.AddDbContext<HrDbContext>(options =>
             options.UseSqlite(builder.Configuration.GetConnectionString("HrDb")));
 
-        // TODO: add proper repositories & services
-        // builder.Services.AddScoped<IBooksRepository, BooksRepository>();
-        // builder.Services.AddScoped<IBooksService, BooksService>();
+        builder.Services.AddScoped<IHrRepository, HrRepository>();
+        builder.Services.AddScoped<EmployeeFactory>();
+        builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+        builder.Services.AddScoped<IPromotionService, PromotionService>();
 
         return builder;
     }
