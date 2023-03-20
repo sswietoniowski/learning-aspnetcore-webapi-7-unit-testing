@@ -15,8 +15,11 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - '5001:5001'
+    environment:
+      ExternalApiBaseUrl: 'https://management.api:5003'
     depends_on:
       - seq
+      - management.api
   management.api:
     container_name: management.api
     build:
