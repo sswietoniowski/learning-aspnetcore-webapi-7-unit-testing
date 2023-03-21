@@ -9,7 +9,7 @@ public static class WebApplicationBuilderAddSwaggerExtension
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new OpenApiInfo { Title = "minimal", Version = "v1" });
+            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Hr.Api", Version = "v1" });
         });
 
         return builder;

@@ -11,5 +11,5 @@ public class PromotionDto
 public class PromotionForCreationDto
 {
     [Required]
-    public Guid EmployeeId { get; set; }    
+    public Guid EmployeeId { get; set; }
 }
