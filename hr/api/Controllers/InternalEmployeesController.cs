@@ -81,8 +81,8 @@ public class InternalEmployeesController : ControllerBase
         await _employeeService.CreateInternalEmployeeAsync(internalEmployee);
 
         // return created employee after mapping to a DTO
-        return CreatedAtAction("GetInternalEmployee",
-            _mapper.Map<InternalEmployeeDto>(internalEmployee),
-            new { employeeId = internalEmployee.Id } );
+        return CreatedAtAction(nameof(GetInternalEmployee),
+            new { employeeId = internalEmployee.Id },
+            _mapper.Map<InternalEmployeeDto>(internalEmployee));
     }
 }
