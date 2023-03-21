@@ -25,6 +25,8 @@ public class InternalEmployeesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]    
     public async Task<ActionResult<IEnumerable<InternalEmployeeDto>>> GetInternalEmployees()
     {
+        _logger.LogInformation("Getting all internal employees");
+
         var internalEmployees = await _employeeService.GetInternalEmployeesAsync();
 
         // with manual mapping
@@ -53,6 +55,8 @@ public class InternalEmployeesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]        
     public async Task<ActionResult<InternalEmployeeDto>> GetInternalEmployee(Guid? employeeId)
     {
+        _logger.LogInformation($"Getting internal employee with id: {employeeId}");
+
         if (!employeeId.HasValue)
         { 
             return NotFound(); 
@@ -72,6 +76,8 @@ public class InternalEmployeesController : ControllerBase
     public async Task<ActionResult<InternalEmployeeDto>> CreateInternalEmployee(
         InternalEmployeeForCreationDto internalEmployeeForCreation)
     { 
+        _logger.LogInformation($"Creating internal employee with data: \n{internalEmployeeForCreation}");
+
         // create an internal employee entity with default values filled out
         // and the values inputted via the POST request
         var internalEmployee = await _employeeService.CreateInternalEmployeeAsync(
