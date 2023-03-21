@@ -1,6 +1,6 @@
-using Hr.Api.Configurations.Middleware;
+using Management.Api.Configurations.Middleware;
 
-namespace Hr.Api.Configurations.Extensions;
+namespace Management.Api.Configurations.Extensions;
 
 public static class WebApplicationUseGlobalErrorHandlerExtension
 {

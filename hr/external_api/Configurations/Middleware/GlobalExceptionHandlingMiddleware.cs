@@ -1,9 +1,9 @@
 using System.Net;
 using System.Text.Json;
-using Hr.Api.Configurations.Exceptions;
+using Management.Api.Configurations.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hr.Api.Configurations.Middleware;
+namespace Management.Api.Configurations.Middleware;
 
 public class GlobalExceptionHandlingMiddleware : IMiddleware
 {

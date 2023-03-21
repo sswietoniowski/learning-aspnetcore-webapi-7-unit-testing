@@ -1,6 +1,6 @@
-namespace Hr.Api.Configurations.Extensions;
+namespace Management.Api.Configurations.Extensions;
 
-using Hr.Api.Configurations.Middleware;
+using Management.Api.Configurations.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
