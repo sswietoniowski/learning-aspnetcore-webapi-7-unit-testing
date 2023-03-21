@@ -2,6 +2,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using Hr.Api.DataAccess.Entities;
 using Hr.Api.DataAccess.Repositories;
+using Hr.Api.Dtos;
 
 namespace Hr.Api.Business.Services;
 
@@ -68,13 +69,13 @@ public class PromotionService : IPromotionService
 
         // deserialize content
         var content = await response.Content.ReadAsStringAsync();
-        var promotionEligibility = JsonSerializer.Deserialize<PromotionEligibility>(content,
+        var promotionEligibilityDto = JsonSerializer.Deserialize<PromotionEligibilityDto>(content,
             new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
 
         // return value
-        return promotionEligibility == null ? false : promotionEligibility.EligibleForPromotion;
+        return promotionEligibilityDto == null ? false : promotionEligibilityDto.EligibleForPromotion;
     }
 }
