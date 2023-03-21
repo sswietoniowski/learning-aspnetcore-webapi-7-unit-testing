@@ -56,11 +56,10 @@ public class PromotionService : IPromotionService
         };
 
         // call into API
-        var httpClient = _httpClientFactory.CreateClient();
-        var externalApiBaseUrl = _configuration["ExternalApiBaseUrl"];
+        var httpClient = _httpClientFactory.CreateClient("MyCustomClient");
 
         var request = new HttpRequestMessage(HttpMethod.Get,
-            $"{externalApiBaseUrl}/api/promotions/{employeeId}");
+            $"api/promotions/{employeeId}");
 
         request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
