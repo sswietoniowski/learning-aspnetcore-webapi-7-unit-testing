@@ -8,6 +8,6 @@ public class StatisticProfile : Profile
 {
     public StatisticProfile()
     {
-        CreateMap<IHttpConnectionFeature, StatisticDto>();
+        CreateMap<IHttpConnectionFeature, StatisticsDto>();
     }
 }

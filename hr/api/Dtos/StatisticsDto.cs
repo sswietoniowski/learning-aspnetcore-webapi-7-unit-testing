@@ -1,6 +1,6 @@
 namespace Hr.Api.Dtos;
 
-public class StatisticDto
+public class StatisticsDto
 {
     public string LocalIpAddress { get; set; } = string.Empty;
     public int LocalPort { get; set; }

@@ -19,36 +19,39 @@ public class PromotionsController : ControllerBase
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-            [HttpPost]
-        public async Task<IActionResult> CreatePromotion(PromotionForCreationDto promotionForCreation)
-        { 
-            _logger.LogInformation($"Creating promotion with data: \n{promotionForCreation}");
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]    
+    public async Task<IActionResult> CreatePromotion(PromotionForCreationDto promotionForCreation)
+    { 
+        _logger.LogInformation($"Creating promotion with data: \n{promotionForCreation}");
 
-            var internalEmployeeToPromote = await _employeeService.GetInternalEmployeeByIdAsync(promotionForCreation.EmployeeId);
+        var internalEmployeeToPromote = await _employeeService.GetInternalEmployeeByIdAsync(promotionForCreation.EmployeeId);
 
-            if (internalEmployeeToPromote == null)
-            {
-                return BadRequest();
-            } 
+        if (internalEmployeeToPromote == null)
+        {
+            return BadRequest();
+        } 
 
-            if (await _promotionService.PromoteInternalEmployeeAsync(internalEmployeeToPromote))
-            {
-                _logger.LogInformation($"Employee with id: {internalEmployeeToPromote.Id} was promoted to job level: {internalEmployeeToPromote.JobLevel}.");
+        if (await _promotionService.PromoteInternalEmployeeAsync(internalEmployeeToPromote))
+        {
+            _logger.LogInformation($"Employee with id: {internalEmployeeToPromote.Id} was promoted to job level: {internalEmployeeToPromote.JobLevel}.");
 
-                return Ok
-                (
-                    new PromotionDto() 
-                    { 
-                        EmployeeId = internalEmployeeToPromote.Id, 
-                        JobLevel = internalEmployeeToPromote.JobLevel 
-                    }
-                );
-            }
-            else
-            {
-                _logger.LogInformation($"Employee with id: {internalEmployeeToPromote.Id} was not eligible for promotion.");
-
-                return BadRequest("Employee not eligible for promotion.");
-            }              
+            return Ok
+            (
+                new PromotionDto() 
+                { 
+                    EmployeeId = internalEmployeeToPromote.Id, 
+                    JobLevel = internalEmployeeToPromote.JobLevel 
+                }
+            );
         }
+        else
+        {
+            _logger.LogInformation($"Employee with id: {internalEmployeeToPromote.Id} was not eligible for promotion.");
+
+            return BadRequest("Employee not eligible for promotion.");
+        }              
+    }
 }
