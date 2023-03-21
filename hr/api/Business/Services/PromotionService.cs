@@ -46,16 +46,6 @@ public class PromotionService : IPromotionService
     /// </summary> 
     private async Task<bool> CheckIfInternalEmployeeIsEligibleForPromotion(Guid employeeId)
     {
-        // skip SSL error (for demo purposes only!)
-        var handler = new HttpClientHandler
-        {
-            ServerCertificateCustomValidationCallback = (request, cert, chain, errors) =>
-            {
-                Console.WriteLine("SSL error skipped");
-                return true;
-            }
-        };
-
         // call into API
         var httpClient = _httpClientFactory.CreateClient("MyCustomClient");
 
