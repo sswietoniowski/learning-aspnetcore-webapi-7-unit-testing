@@ -62,10 +62,10 @@ public class TestIsolationApproachesTests
         // Arrange
         var httpClient = new HttpClient(
             new TestablePromotionEligibilityHandler(true));
+        httpClient.BaseAddress = new Uri("https://localhost:5003");
         var internalEmployee = new InternalEmployee(
             "Brooklyn", "Cannon", 5, 3000, false, 1);
-        var promotionService = new PromotionService(new HrTestDataRepository(), httpClient,
-            default!, default!);
+        var promotionService = new PromotionService(new HrTestDataRepository(), httpClient);
 
         // Act
         await promotionService.PromoteInternalEmployeeAsync(internalEmployee);

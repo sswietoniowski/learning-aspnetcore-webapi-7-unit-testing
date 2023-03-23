@@ -10,27 +10,16 @@ public class PromotionService : IPromotionService
 {
     private readonly IHrRepository _repository;
     private readonly HttpClient _httpClient;
-    private readonly IConfiguration _configuration;
-    private readonly ILogger<PromotionService> _logger;
 
-    public PromotionService(IHrRepository repository, IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<PromotionService> logger)
+    public PromotionService(IHrRepository repository, IHttpClientFactory httpClientFactory)
+        : this(repository, httpClientFactory.CreateClient("MyCustomClient"))
     {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        if (httpClientFactory is null)
-        {
-            throw new ArgumentNullException(nameof(httpClientFactory));
-        }
-        _httpClient = httpClientFactory.CreateClient("MyCustomClient");
-        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        _logger = logger;
     }
 
-    public PromotionService(IHrRepository repository, HttpClient httpClient, IConfiguration configuration, ILogger<PromotionService> logger)
+    public PromotionService(IHrRepository repository, HttpClient httpClient)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        _logger = logger;
     }
 
     /// <summary>

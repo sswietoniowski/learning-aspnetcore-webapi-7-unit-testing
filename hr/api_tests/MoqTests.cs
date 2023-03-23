@@ -68,7 +68,7 @@ public class MoqTests
         decimal suggestedBonus = 1000;
 
         // Act 
-        var employee = employeeService.CreateInternalEmployee("Sandy", "Dockx");
+        var employee = employeeService.CreateInternalEmployee("Kevin", "Dockx");
 
         // Assert  
         Assert.Equal(suggestedBonus, employee.SuggestedBonus);
