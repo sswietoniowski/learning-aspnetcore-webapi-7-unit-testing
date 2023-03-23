@@ -10,17 +10,15 @@ namespace Hr.Api.Controllers;
 public class StatisticsController : ControllerBase
 {
     private readonly IMapper _mapper;
-    private readonly ILogger<StatisticsController> _logger;
 
-    public StatisticsController(IMapper mapper, ILogger<StatisticsController> logger)
+    public StatisticsController(IMapper mapper)
     {
         _mapper = mapper;
-        _logger = logger;
     }
 
-    [HttpGet] 
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]     
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<StatisticsDto> GetStatistics()
     {
         var httpConnectionFeature = HttpContext.Features.Get<IHttpConnectionFeature>();

@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Http.Features;
 
 namespace Hr.Api.Configurations.Mapper;
 
-public class StatisticProfile : Profile
+public class StatisticsProfile : Profile
 {
-    public StatisticProfile()
+    public StatisticsProfile()
     {
         CreateMap<IHttpConnectionFeature, StatisticsDto>();
     }
