@@ -11,13 +11,13 @@ public class InternalEmployeesController : ControllerBase
 {
     private readonly IEmployeeService _employeeService;
     private readonly IMapper _mapper;
-    private readonly ILogger<InternalEmployeesController> _logger;
+    private readonly ILogger<InternalEmployeesController>? _logger;
 
-    public InternalEmployeesController(IEmployeeService employeeService, IMapper mapper, ILogger<InternalEmployeesController> logger)
+    public InternalEmployeesController(IEmployeeService employeeService, IMapper mapper, ILogger<InternalEmployeesController>? logger)
     {
         _employeeService = employeeService ?? throw new ArgumentNullException(nameof(employeeService));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _logger = logger;
     }
 
     [HttpGet]
@@ -25,7 +25,7 @@ public class InternalEmployeesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]    
     public async Task<ActionResult<IEnumerable<InternalEmployeeDto>>> GetInternalEmployees()
     {
-        _logger.LogInformation("Getting all internal employees");
+        _logger?.LogInformation("Getting all internal employees");
 
         var internalEmployees = await _employeeService.GetInternalEmployeesAsync();
 
@@ -55,7 +55,7 @@ public class InternalEmployeesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]        
     public async Task<ActionResult<InternalEmployeeDto>> GetInternalEmployee(Guid? employeeId)
     {
-        _logger.LogInformation($"Getting internal employee with id: {employeeId}");
+        _logger?.LogInformation($"Getting internal employee with id: {employeeId}");
 
         if (!employeeId.HasValue)
         { 
@@ -79,7 +79,7 @@ public class InternalEmployeesController : ControllerBase
     public async Task<ActionResult<InternalEmployeeDto>> CreateInternalEmployee(
         InternalEmployeeForCreationDto internalEmployeeForCreation)
     { 
-        _logger.LogInformation($"Creating internal employee with data: \n{internalEmployeeForCreation}");
+        _logger?.LogInformation($"Creating internal employee with data: \n{internalEmployeeForCreation}");
 
         // create an internal employee entity with default values filled out
         // and the values inputted via the POST request
