@@ -9,14 +9,26 @@ namespace Hr.Api.Business.Services;
 public class PromotionService : IPromotionService
 {
     private readonly IHrRepository _repository;
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
     private readonly ILogger<PromotionService> _logger;
 
     public PromotionService(IHrRepository repository, IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<PromotionService> logger)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
+        if (httpClientFactory is null)
+        {
+            throw new ArgumentNullException(nameof(httpClientFactory));
+        }
+        _httpClient = httpClientFactory.CreateClient("MyCustomClient");
+        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+        _logger = logger;
+    }
+
+    public PromotionService(IHrRepository repository, HttpClient httpClient, IConfiguration configuration, ILogger<PromotionService> logger)
+    {
+        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         _logger = logger;
     }
@@ -47,14 +59,12 @@ public class PromotionService : IPromotionService
     private async Task<bool> CheckIfInternalEmployeeIsEligibleForPromotion(Guid employeeId)
     {
         // call into API
-        var httpClient = _httpClientFactory.CreateClient("MyCustomClient");
-
         var request = new HttpRequestMessage(HttpMethod.Get,
             $"api/promotions/{employeeId}");
 
         request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-        var response = await httpClient.SendAsync(request);
+        var response = await _httpClient.SendAsync(request);
         response.EnsureSuccessStatusCode();
 
         // deserialize content
