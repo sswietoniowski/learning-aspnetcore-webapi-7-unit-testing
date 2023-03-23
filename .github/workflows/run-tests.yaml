@@ -27,10 +27,10 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Install dependencies
-        run: dotnet restore ./hr/api_tests/api.csproj
+        run: dotnet restore ./hr/api_tests/Hr.Api.Tests.csproj
 
       - name: Build
-        run: dotnet build ./hr/api_tests/api.csproj --configuration Release --no-restore
+        run: dotnet build ./hr/api_tests/Hr.Api.Tests.csproj --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test ./hr/api_tests/api.csproj --no-restore --verbosity normal
+        run: dotnet test ./hr/api_tests/Hr.Api.Tests.csproj --no-restore --verbosity normal
