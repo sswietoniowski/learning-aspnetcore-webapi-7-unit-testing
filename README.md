@@ -34,7 +34,27 @@ Or you can use Docker Compose and run the following command:
 docker-compose --file .\hr\docker-compose.yml --project-name hr up --build -d
 ```
 
-## Introduction
+To run tests:
+
+```cmd
+cd .\hr\api_tests
+dotnet restore
+dotnet build
+dotnet test
+```
+
+```cmd
+cd .\hr\library_tests
+dotnet restore
+dotnet build
+dotnet test
+```
+
+All tests should pass.
+
+Alternatively you can use Visual Studio and Test Explorer.
+
+## Introduction to Unit Testing
 
 > _Unit test_ is an automated test that tests a small piece of behavior.
 
@@ -133,7 +153,7 @@ nor coded with .NET Core or .NET 6 in mind.
 xUnit is successor of NUnit, built with .NET (Core) and new .NET features in mind. Improves test isolation,
 and extensibility. Encourages cleaner testing code.
 
-## Basic Scenarios
+## Tackling Basic Unit Testing Scenarios
 
 > _Assert_ is a boolean expression, used to verify the outcome of a test, that should evaluate to true.
 
