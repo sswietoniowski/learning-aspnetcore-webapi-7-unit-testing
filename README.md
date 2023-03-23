@@ -576,3 +576,4 @@ xUnit supports running tests against multiple target frameworks, useful when dev
 Integrating unit tests in your CI/CD pipeline.
 
 ![Integrating unit tests in your CI/CD pipeline](./img/unit_tests_in_cicd_pipeline.jpg)
+
