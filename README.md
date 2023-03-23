@@ -1,3 +1,5 @@
+[![Run tests](https://github.com/sswietoniowski/learning-aspnetcore-webapi-7-unit-testing/actions/workflows/run-tests.yaml/badge.svg?branch=master)](https://github.com/sswietoniowski/learning-aspnetcore-webapi-7-unit-testing/actions/workflows/run-tests.yaml)
+
 # Learning ASP.NET Core - WebAPI (.NET 7) Unit Testing
 
 This repository contains examples showing how to unit test an API (WebAPI 7).
