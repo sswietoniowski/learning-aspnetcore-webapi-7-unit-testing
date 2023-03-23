@@ -26,4 +26,10 @@
     <ProjectReference Include="..\api\Hr.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestData\EmployeeServiceTestData.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
