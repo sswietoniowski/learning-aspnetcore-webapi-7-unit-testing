@@ -12,10 +12,10 @@ public class EmployeeManagementSecurityHeadersMiddlewareTests
         var httpContext = new DefaultHttpContext();
         RequestDelegate next = (HttpContext httpContext) => Task.CompletedTask;
 
-        var middleware = new SecurityHeadersMiddleware(default!);
+        var middleware = new SecurityHeadersMiddleware(next);
 
         // Act
-        await middleware.InvokeAsync(httpContext, next);
+        await middleware.InvokeAsync(httpContext);
 
         // Assert
         var cspHeader = httpContext.Response.Headers["Content-Security-Policy"].ToString();

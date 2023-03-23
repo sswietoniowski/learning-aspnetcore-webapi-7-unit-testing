@@ -1,22 +1,22 @@
 namespace Hr.Api.Configurations.Middleware;
 
-public class SecurityHeadersMiddleware : IMiddleware
+public class SecurityHeadersMiddleware
 {
-    private readonly ILogger<SecurityHeadersMiddleware> _logger;
+    private readonly RequestDelegate _next;
 
-    public SecurityHeadersMiddleware(ILogger<SecurityHeadersMiddleware> logger)
+    public SecurityHeadersMiddleware(RequestDelegate next)
     {
-        _logger = logger;
+        _next = next;
     }
-    
-    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+
+    public async Task InvokeAsync(HttpContext context)
     {
-        IHeaderDictionary headers = context.Request.Headers;
+        IHeaderDictionary headers = context.Response.Headers;
 
         // Add CSP + X-Content-Type
-        headers["Content-Security-Policy"] = "default-src 'self';frame-ancestors 'none';"; 
-        headers["X-Content-Type-Options"] = "nosniff"; 
+        headers["Content-Security-Policy"] = "default-src 'self';frame-ancestors 'none';";
+        headers["X-Content-Type-Options"] = "nosniff";
 
-        await next(context);
+        await _next(context);
     }
 }
