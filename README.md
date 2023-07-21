@@ -8,6 +8,20 @@ Based on this course [Unit Testing an ASP.NET Core 6 Web API](https://app.plural
 
 Original course materials can be found [here](https://app.pluralsight.com/library/courses/asp-dot-net-core-6-web-api-unit-testing/exercise-files) and [here](https://github.com/KevinDockx/UnitTestingAspNetCore6WebAPI).
 
+## Table of Contents
+
+- [Learning ASP.NET Core - WebAPI (.NET 7) Unit Testing](#learning-aspnet-core---webapi-net-7-unit-testing)
+  - [Table of Contents](#table-of-contents)
+  - [Setup](#setup)
+  - [Introduction to Unit Testing](#introduction-to-unit-testing)
+  - [Tackling Basic Unit Testing Scenarios](#tackling-basic-unit-testing-scenarios)
+  - [Setting Up Tests and Controlling Test Execution](#setting-up-tests-and-controlling-test-execution)
+  - [Working with Data-driven Tests](#working-with-data-driven-tests)
+  - [Isolating Unit Tests with ASP.NET Core Techniques and Mocking](#isolating-unit-tests-with-aspnet-core-techniques-and-mocking)
+  - [Unit Testing ASP.NET Core API Controllers](#unit-testing-aspnet-core-api-controllers)
+  - [Unit Testing ASP.NET Core Middleware, Filters and Service Registrations](#unit-testing-aspnet-core-middleware-filters-and-service-registrations)
+  - [Integrating Unit Tests In Your Development and Release Flows](#integrating-unit-tests-in-your-development-and-release-flows)
+
 ## Setup
 
 First run external (Management) API:
