@@ -21,6 +21,7 @@ Original course materials can be found [here](https://app.pluralsight.com/librar
   - [Unit Testing ASP.NET Core API Controllers](#unit-testing-aspnet-core-api-controllers)
   - [Unit Testing ASP.NET Core Middleware, Filters and Service Registrations](#unit-testing-aspnet-core-middleware-filters-and-service-registrations)
   - [Integrating Unit Tests In Your Development and Release Flows](#integrating-unit-tests-in-your-development-and-release-flows)
+  - [Summary](#summary)
 
 ## Setup
 
@@ -590,3 +591,7 @@ xUnit supports running tests against multiple target frameworks, useful when dev
 Integrating unit tests in your CI/CD pipeline.
 
 ![Integrating unit tests in your CI/CD pipeline](./img/unit_tests_in_cicd_pipeline.jpg)
+
+## Summary
+
+Are you ready to start testing :-)?
