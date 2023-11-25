@@ -21,6 +21,9 @@ Original course materials can be found [here](https://app.pluralsight.com/librar
   - [Unit Testing ASP.NET Core API Controllers](#unit-testing-aspnet-core-api-controllers)
   - [Unit Testing ASP.NET Core Middleware, Filters and Service Registrations](#unit-testing-aspnet-core-middleware-filters-and-service-registrations)
   - [Integrating Unit Tests In Your Development and Release Flows](#integrating-unit-tests-in-your-development-and-release-flows)
+  - [Extras](#extras)
+    - [Evaluating and Benchmarking the Performance of APIs](#evaluating-and-benchmarking-the-performance-of-apis)
+    - [How to comprehensively test a Web API with infrastructure?](#how-to-comprehensively-test-a-web-api-with-infrastructure)
   - [Summary](#summary)
 
 ## Setup
@@ -591,6 +594,20 @@ xUnit supports running tests against multiple target frameworks, useful when dev
 Integrating unit tests in your CI/CD pipeline.
 
 ![Integrating unit tests in your CI/CD pipeline](./img/unit_tests_in_cicd_pipeline.jpg)
+
+## Extras
+
+Couple of things that I found interesting.
+
+### Evaluating and Benchmarking the Performance of APIs
+
+Based on [this](https://learning.oreilly.com/library/view/mastering-minimal-apis/9781803237824/B17902_10.xhtml) book.
+
+### How to comprehensively test a Web API with infrastructure?
+
+Based on [this](https://youtu.be/_d8umg11YQw?si=SEJ7rx3YtjvCDAuP) video.
+
+TODO:
 
 ## Summary
 
