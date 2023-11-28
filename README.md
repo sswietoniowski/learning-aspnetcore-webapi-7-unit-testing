@@ -23,7 +23,7 @@ Original course materials can be found [here](https://app.pluralsight.com/librar
   - [Integrating Unit Tests In Your Development and Release Flows](#integrating-unit-tests-in-your-development-and-release-flows)
   - [Extras](#extras)
     - [Evaluating and Benchmarking the Performance of APIs with k6](#evaluating-and-benchmarking-the-performance-of-apis-with-k6)
-    - [Benchmarking minimal APIs with BenchmarkDotNet](#benchmarking-minimal-apis-with-benchmarkdotnet)
+    - [Benchmarking APIs with BenchmarkDotNet](#benchmarking-apis-with-benchmarkdotnet)
   - [Summary](#summary)
 
 ## Setup
@@ -736,7 +736,7 @@ running (1m25.0s), 00/50 VUs, 104112 complete and 0 interrupted iterations
 default ✓ [======================================] 00/50 VUs  1m25s
 ```
 
-### Benchmarking minimal APIs with BenchmarkDotNet
+### Benchmarking APIs with BenchmarkDotNet
 
 TODO:
 
