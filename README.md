@@ -738,7 +738,109 @@ default ✓ [======================================] 00/50 VUs  1m25s
 
 ### Benchmarking APIs with BenchmarkDotNet
 
-TODO:
+[BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet) is a framework for benchmarking .NET code.
+
+This tool is used for calculating the time taken for the execution of a task, the memory used, and many other parameters.
+
+To use this tool, I've created a new project:
+
+```cmd
+dotnet new console --name Hr.Api.Benchmark --output .\hr\api_benchmark
+```
+
+And added this project to the solution:
+
+```cmd
+dotnet sln .\hr\Hr.sln add .\hr\api_benchmark\Hr.Api.Benchmark.csproj
+```
+
+Then I've added the following dependencies:
+
+```cmd
+dotnet add .\hr\api_benchmark\Hr.Api.Benchmark.csproj package BenchmarkDotNet
+```
+
+In the `Program.cs` file I've added the following code:
+
+```csharp
+using BenchmarkDotNet.Running;
+
+BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args);
+```
+
+Then I've created a new class `InternalEmployeesControllerBenchmark.cs` in the `Hr.Api.Benchmark` project:
+
+```csharp
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
+
+namespace Hr.Api.Benchmark;
+
+[SimpleJob(RuntimeMoniker.Net70, baseline: true)]
+[JsonExporter]
+public class InternalEmployeesControllerBenchmark
+{
+    private readonly HttpClient client = new HttpClient();
+
+    [GlobalSetup]
+    public void Setup()
+    {
+        client.BaseAddress = new Uri("https://localhost:5001");
+    }
+
+    [Benchmark]
+    public async Task InternalEmployees_Get() => await client.GetAsync("api/internal-employees");
+}
+```
+
+Now we can run our benchmark.
+
+First we need to start our API (I'm using Docker Compose):
+
+```cmd
+docker-compose --file .\hr\docker-compose.yml --project-name hr up --build -d
+```
+
+Then run the following command:
+
+```cmd
+cd .\hr\api_benchmark
+dotnet run --configuration Release
+```
+
+Finally we can see the results:
+
+```cmd
+BenchmarkDotNet v0.13.10, Windows 10 (10.0.19045.3693/22H2/2022Update)
+AMD Ryzen 7 3700X, 1 CPU, 16 logical and 8 physical cores
+.NET SDK 7.0.311
+  [Host]   : .NET 7.0.14 (7.0.1423.51910), X64 RyuJIT AVX2
+  .NET 7.0 : .NET 7.0.14 (7.0.1423.51910), X64 RyuJIT AVX2
+
+Job=.NET 7.0  Runtime=.NET 7.0  
+
+| Method                | Mean     | Error     | StdDev    | Ratio |
+|---------------------- |---------:|----------:|----------:|------:|
+| InternalEmployees_Get | 1.922 ms | 0.0355 ms | 0.0510 ms |  1.00 |
+
+// * Hints *
+Outliers
+  InternalEmployeesControllerBenchmark.InternalEmployees_Get: .NET 7.0 -> 2 outliers were removed (2.06 ms, 2.12 ms)
+
+// * Legends *
+  Mean   : Arithmetic mean of all measurements
+  Error  : Half of 99.9% confidence interval
+  StdDev : Standard deviation of all measurements
+  Ratio  : Mean of the ratio distribution ([Current]/[Baseline])
+  1 ms   : 1 Millisecond (0.001 sec)
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:00:21 (21.56 sec), executed benchmarks: 1
+
+Global total time: 00:00:25 (25.5 sec), executed benchmarks: 1
+// * Artifacts cleanup *
+Artifacts cleanup is finished
+```
 
 ## Summary
 
