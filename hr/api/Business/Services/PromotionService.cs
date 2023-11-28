@@ -16,7 +16,7 @@ public class PromotionService : IPromotionService
     {
     }
 
-    public PromotionService(IHrRepository repository, HttpClient httpClient)
+    private PromotionService(IHrRepository repository, HttpClient httpClient)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));

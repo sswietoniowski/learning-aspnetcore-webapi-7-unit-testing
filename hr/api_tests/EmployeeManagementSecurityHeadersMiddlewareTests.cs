@@ -10,7 +10,7 @@ public class EmployeeManagementSecurityHeadersMiddlewareTests
     {
         // Arrange
         var httpContext = new DefaultHttpContext();
-        RequestDelegate next = (HttpContext httpContext) => Task.CompletedTask;
+        RequestDelegate next = (HttpContext _) => Task.CompletedTask;
 
         var middleware = new SecurityHeadersMiddleware(next);
 

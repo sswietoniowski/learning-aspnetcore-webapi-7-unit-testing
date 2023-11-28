@@ -22,8 +22,8 @@ Original course materials can be found [here](https://app.pluralsight.com/librar
   - [Unit Testing ASP.NET Core Middleware, Filters and Service Registrations](#unit-testing-aspnet-core-middleware-filters-and-service-registrations)
   - [Integrating Unit Tests In Your Development and Release Flows](#integrating-unit-tests-in-your-development-and-release-flows)
   - [Extras](#extras)
-    - [Evaluating and Benchmarking the Performance of APIs](#evaluating-and-benchmarking-the-performance-of-apis)
-    - [How to comprehensively test a Web API with infrastructure?](#how-to-comprehensively-test-a-web-api-with-infrastructure)
+    - [Evaluating and Benchmarking the Performance of APIs with k6](#evaluating-and-benchmarking-the-performance-of-apis-with-k6)
+    - [Benchmarking minimal APIs with BenchmarkDotNet](#benchmarking-minimal-apis-with-benchmarkdotnet)
   - [Summary](#summary)
 
 ## Setup
@@ -599,13 +599,144 @@ Integrating unit tests in your CI/CD pipeline.
 
 Couple of things that I found interesting.
 
-### Evaluating and Benchmarking the Performance of APIs
+### Evaluating and Benchmarking the Performance of APIs with k6
 
 Based on [this](https://learning.oreilly.com/library/view/mastering-minimal-apis/9781803237824/B17902_10.xhtml) book.
 
-### How to comprehensively test a Web API with infrastructure?
+To test load on a web application and tells us how many requests per second it can handle, we can use [**k6**](https://github.com/grafana/k6) tool.
 
-Based on [this](https://youtu.be/_d8umg11YQw?si=SEJ7rx3YtjvCDAuP) video.
+Use cases for the k6 tool:
+
+- load testing,
+- performance and synthetic monitoring,
+- chaos and reliability testing.
+
+To install k6 tool, run the following command (provided that you are using [Chocolatey](https://chocolatey.org/)):
+
+```cmd
+choco install k6
+```
+
+If you've got it already installed, you can update it with the following command:
+
+```cmd
+choco upgrade k6
+```
+
+Let's assume that we want to test the following endpoint:
+
+```http
+GET https://localhost:5001/api/internal-employees
+```
+
+To do that we need to create a JavaScript file with the following content:
+
+```javascript
+import http from 'k6/http';
+import { check } from 'k6';
+import { Rate } from 'k6/metrics';
+
+const checkFailureRate = new Rate('check_failure_rate');
+
+export let options = {
+  summaryTrendStats: ['avg', 'p(95)'],
+  stages: [
+    // Linearly ramp up from 1 to 50 VUs during 10 seconds
+    { target: 50, duration: '10s' },
+
+    // Hold at 50 VUs for the next 1 minute
+    { target: 50, duration: '1m' },
+
+    // Linearly ramp down from 50 to 0 VUs over the last 15 seconds
+    { target: 0, duration: '15s' },
+  ],
+
+  thresholds: {
+    // We want the 95th percentile of all HTTP request durations to be less than 500ms
+    http_req_duration: ['p(95)<500'],
+
+    // Thresholds based on the custom metric we defined and use to track application failures
+    check_failure_rate: [
+      // Global failure rate should be less than 1%
+      'rate<0.01',
+
+      // Abort the test early if it climbs over 5%
+      { threshold: 'rate<=0.05', abortOnFail: true },
+    ],
+  },
+};
+
+export default function () {
+  // execute http get call
+  let response = http.get('https://localhost:5001/api/internal-employees');
+
+  // check() returns false if any of the specified conditions fail
+  const result = check(response, {
+    'status is 200': (r) => r.status === 200,
+  });
+
+  // We reverse the check() result since we want to count the failures
+  checkFailureRate.add(!result);
+}
+```
+
+Now we can start our API (I'm using Docker Compose):
+
+```cmd
+docker-compose --file .\hr\docker-compose.yml --project-name hr up --build -d
+```
+
+Then we can run our test:
+
+```cmd
+k6 run .\hr\api_tests\k6\load_test.js --summary-export=.\hr\api_tests\k6\results\load_test_results.json
+```
+
+After the test is finished, we can see the results (in your case they might be different):
+
+```cmd
+
+          /\      |‾‾| /‾‾/   /‾‾/
+     /\  /  \     |  |/  /   /  /
+    /  \/    \    |     (   /   ‾‾\
+   /          \   |  |\  \ |  (‾)  |
+  / __________ \  |__| \__\ \_____/ .io
+
+  execution: local
+     script: .\hr\api_tests\k6\load_test.js
+     output: -
+
+  scenarios: (100.00%) 1 scenario, 50 max VUs, 1m55s max duration (incl. graceful stop):
+           * default: Up to 50 looping VUs for 1m25s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+     ✓ status is 200
+
+   ✓ check_failure_rate.............: 0.00%   ✓ 0           ✗ 104112
+     checks.........................: 100.00% ✓ 104112      ✗ 0
+     data_received..................: 48 MB   570 kB/s
+     data_sent......................: 4.1 MB  49 kB/s
+     http_req_blocked...............: avg=7.77µs  p(95)=0s
+     http_req_connecting............: avg=288ns   p(95)=0s
+   ✓ http_req_duration..............: avg=34.77ms p(95)=64.12ms
+       { expected_response:true }...: avg=34.77ms p(95)=64.12ms
+     http_req_failed................: 0.00%   ✓ 0           ✗ 104112
+     http_req_receiving.............: avg=1.12ms  p(95)=7.97ms
+     http_req_sending...............: avg=63.59µs p(95)=529.5µs
+     http_req_tls_handshaking.......: avg=6.93µs  p(95)=0s
+     http_req_waiting...............: avg=33.58ms p(95)=60.99ms
+     http_reqs......................: 104112  1224.799898/s
+     iteration_duration.............: avg=34.88ms p(95)=64.28ms
+     iterations.....................: 104112  1224.799898/s
+     vus............................: 1       min=1         max=50
+     vus_max........................: 50      min=50        max=50
+
+
+running (1m25.0s), 00/50 VUs, 104112 complete and 0 interrupted iterations
+default ✓ [======================================] 00/50 VUs  1m25s
+```
+
+### Benchmarking minimal APIs with BenchmarkDotNet
 
 TODO:
 
