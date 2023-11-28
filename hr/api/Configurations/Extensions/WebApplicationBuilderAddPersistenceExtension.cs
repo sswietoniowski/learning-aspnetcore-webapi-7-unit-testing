@@ -17,7 +17,14 @@ public static class WebApplicationBuilderAddPersistenceExtension
         builder.Services.AddScoped<IHrRepository, HrRepository>();
         builder.Services.AddScoped<EmployeeFactory>();
         builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-        builder.Services.AddScoped<IPromotionService, PromotionService>();
+        builder.Services.AddScoped<IPromotionService>(x =>
+        {
+            var hrRepository = x.GetRequiredService<IHrRepository>();
+            var httpClientFactory = x.GetRequiredService<IHttpClientFactory>();
+
+            var promotionService = new PromotionService(hrRepository, httpClientFactory);
+            return promotionService;
+        });
 
         return builder;
     }
