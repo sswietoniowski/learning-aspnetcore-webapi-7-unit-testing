@@ -765,7 +765,9 @@ In the `Program.cs` file I've added the following code:
 ```csharp
 using BenchmarkDotNet.Running;
 
-BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args);
+using Hr.Api.Benchmark;
+
+var summary = BenchmarkRunner.Run<InternalEmployeesControllerBenchmark>();
 ```
 
 Then I've created a new class `InternalEmployeesControllerBenchmark.cs` in the `Hr.Api.Benchmark` project:
@@ -817,7 +819,7 @@ AMD Ryzen 7 3700X, 1 CPU, 16 logical and 8 physical cores
   [Host]   : .NET 7.0.14 (7.0.1423.51910), X64 RyuJIT AVX2
   .NET 7.0 : .NET 7.0.14 (7.0.1423.51910), X64 RyuJIT AVX2
 
-Job=.NET 7.0  Runtime=.NET 7.0  
+Job=.NET 7.0  Runtime=.NET 7.0
 
 | Method                | Mean     | Error     | StdDev    | Ratio |
 |---------------------- |---------:|----------:|----------:|------:|
