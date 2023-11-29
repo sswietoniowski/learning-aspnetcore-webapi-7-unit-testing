@@ -24,6 +24,7 @@ Original course materials can be found [here](https://app.pluralsight.com/librar
   - [Extras](#extras)
     - [Evaluating and Benchmarking the Performance of APIs with k6](#evaluating-and-benchmarking-the-performance-of-apis-with-k6)
     - [Benchmarking APIs with BenchmarkDotNet](#benchmarking-apis-with-benchmarkdotnet)
+    - [How to comprehensively (E2E) test a Web API?](#how-to-comprehensively-e2e-test-a-web-api)
   - [Summary](#summary)
 
 ## Setup
@@ -843,6 +844,10 @@ Global total time: 00:00:25 (25.5 sec), executed benchmarks: 1
 // * Artifacts cleanup *
 Artifacts cleanup is finished
 ```
+
+### How to comprehensively (E2E) test a Web API?
+
+[Here](https://youtu.be/_d8umg11YQw?si=qJbfBSpnjRUei2-o) you will find great explanation of how to test a Web API (End-to-End).
 
 ## Summary
 
