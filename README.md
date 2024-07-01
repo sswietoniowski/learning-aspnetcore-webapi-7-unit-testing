@@ -73,13 +73,13 @@ dotnet test
 
 All tests should pass.
 
-Alternatively you can use Visual Studio and Test Explorer.
+Alternatively, you can use Visual Studio and Test Explorer.
 
 ## Introduction to Unit Testing
 
 > _Unit test_ is an automated test that tests a small piece of behavior.
 
-The What, Why and What Not of Unit Testing:
+The What, Why, and What Not of Unit Testing:
 
 - unit tests should have low complexity,
 - unit tests should be fast,
@@ -102,9 +102,9 @@ Most applications should be tested with a combination of automated tests:
 
 > _Integration test_ is an automated test that tests whether or not two or more components work together correctly.
 
-Integration test can test a full request/response cycle, but doesn't have to. Can be created with the same framework as unit tests - optionally combined with Microsoft TestHost and TestServer.
+Integration tests can test a full request/response cycle but don't have to. Can be created with the same framework as unit tests - optionally combined with Microsoft TestHost and TestServer.
 
-Integration tests characteristics:
+Integration test characteristics:
 
 - integration tests have medium complexity,
 - integration tests are relatively slow,
@@ -118,7 +118,7 @@ Functional tests can be automated with:
 - Postman (APIs),
 - Microsoft TestHost and TestServer.
 
-Functional tests characteristics:
+Functional test characteristics:
 
 - functional tests have high complexity,
 - functional tests are slow,
@@ -129,7 +129,7 @@ Good and Bad Candidates for a Unit Test:
 - good candidates: algorithms, behavior, rules,
 - bad candidates: data access, UI, system interactions.
 
-Usually you'll have a mix of unit tests, integration tests and functional tests. Majority of tests should be unit tests, then integration tests and finally (minority) functional tests.
+Usually, you'll have a mix of unit tests, integration tests, and functional tests. The majority of tests should be unit tests, then integration tests, and finally (minority) functional tests.
 
 Naming Guidelines for Unit Tests:
 
@@ -171,14 +171,14 @@ Comparing xUnit, NUnit and MSTest:
 MSTest and NUnit can be used to test .NET 6 code, but they carry technical debt with them. Designed
 nor coded with .NET Core or .NET 6 in mind.
 
-xUnit is successor of NUnit, built with .NET (Core) and new .NET features in mind. Improves test isolation,
+xUnit is the successor of NUnit, built with .NET (Core) and new .NET features in mind. Improves test isolation,
 and extensibility. Encourages cleaner testing code.
 
 ## Tackling Basic Unit Testing Scenarios
 
-> _Assert_ is a boolean expression, used to verify the outcome of a test, that should evaluate to true.
+> _Assert_ is a boolean expression used to verify the outcome of a test that should be evaluated as true.
 
-A test can contain on or more asserts:
+A test can contain one or more asserts:
 
 - fails when **one or more** asserts fail,
 - passes when **all** asserts pass.
@@ -293,18 +293,18 @@ can use `[InternalsVisibleTo]` attribute to make a private method visible to the
 
 ## Setting Up Tests and Controlling Test Execution
 
-_Constructor and dispose approach_ - set up test context in the constructor, potentially clean up in Dispose method (context is recreated for each test).
+_Constructor and dispose approach_: Set up the test context in the constructor and potentially clean it up in the Dispose method (the context is recreated for each test).
 
-_Class fixture approach_ - create a single test context shared among all tests in the class. Context is cleaned up after all tests in the class have been executed. Use when context creation and cleanup is expensive.
+_Class fixture approach_ - create a single test context shared among all tests in the class. Context is cleaned up after all tests in the class have been executed. Use when context creation and cleanup are expensive.
 
 _Class fixture_ - don't let a test depend on changes made to the context by other tests. Tests must remain isolated. You don't have control over the order in which tests are executed.
 
-_Collection fixture approach_ - create a single test context shared among tests in several test classes. Context is cleaned up after all tests across classes have been executed. Use when context creation and cleanup is expensive.
+_Collection fixture approach_ - create a single test context shared among tests in several test classes. Context is cleaned up after all tests across classes have been executed. Use when context creation and cleanup are expensive.
 
 Integrating test context with ASP.NET Core dependency injection container.
 
-In ASP.NET Core, dependencies are often resolved via the built-in IoC container. Can that be integrated with a unit test? Newing up dependencies is the preferred approach - simple, fast, concise. You might want to integrate
-with the DI system. If the class has got a lot of dependencies, if the dependency tree is large.
+In ASP.NET Core, dependencies are often resolved via the built-in IoC container. Could you integrate that with a unit test? Newing up dependencies is the preferred approach - simple, fast, and concise. You might want to integrate
+with the DI system. If the class has many dependencies and if the dependency tree is large.
 
 ## Working with Data-driven Tests
 
@@ -312,7 +312,7 @@ Introducing Theories and Data-driven Tests
 
 > _Fact_ a test that is always true. They test invariant conditions.
 
-Instead of many tests with the same code, but different input data, you can use a single test with multiple input data sets. To do so we are replacing the `[Fact]` attribute with `[Theory]` attribute. `[Theory]` attribute is used to mark a test method as a data-driven test. `[Theory]` attribute can be used with `[InlineData]` attribute to provide input data for the test. `[InlineData]` attribute is used to provide input data for the test. `[InlineData]` attribute can be used multiple times to provide multiple input data sets for the test.
+Instead of many tests with the same code but different input data, you can use a single test with multiple input data sets. To do so we are replacing the `[Fact]` attribute with `[Theory]` attribute. `[Theory]` attribute marks a test method as a data-driven test. `[Theory]` attribute can be used with `[InlineData]` attribute to provide input data for the test. `[InlineData]` attribute provides input data for the test. `[InlineData]` attribute can be used multiple times to provide multiple input data sets for the test.
 
 > _Theory_ a test which is only true for a particular set of data.
 
@@ -412,9 +412,9 @@ Unit tests should be isolated from other components of the system:
 - database, file system, network, etc.,
 - other dependencies like factories, repositories, services, etc.
 
-By isolating a test you can ber sure that when it passes or fails, it's the cause of the code under test.
+By isolating a test, you can be sure that it's the cause of the code under test when it passes or fails.
 
-> _Test double_ a generic term for any case where you replace a production object for testing purposes.
+> _Test double_ is a generic term for any case where you replace a production object for testing purposes.
 
 Test doubles:
 
@@ -427,32 +427,32 @@ Test doubles:
 Test isolation approaches:
 
 - manually creating test doubles,
-- using built-in framework or library functionality to create test doubles,
+- using a built-in framework or library functionality to create test doubles,
 - using a mocking framework to create test doubles.
 
 Different types of test doubles and different approaches are often combined. Focus on the fact that the test is isolated, no matter how.
 
 Unit testing with Entity Framework Core.
 
-EF Core contains a set of built-in functionalities to easily enable testing & test isolation:
+EF Core contains a set of built-in functionalities to enable testing & test isolation easily:
 
 - avoid calling into a real database,
 - use in-memory implementations instead.
 
-_In-memory database provider_ - simple scenarios, not the best option.
+_In-memory database provider_ - simple scenarios are not the best option.
 
 _SQLite in-memory mode_ - best compatibility with real databases.
 
 Unit testing with HttpClient.
 
-Tests mus be isolated from network calls. A custom message handler can short-circuit the actual call.
+Tests must be isolated from network calls. A custom message handler can short-circuit the actual call.
 
 Which test isolation approach should you use?
 
 Consider:
 
 - test reliability,
-- effort required to create test doubles,
+- the effort required to create test doubles,
 - available knowledge and experience.
 
 ## Unit Testing ASP.NET Core API Controllers
@@ -466,10 +466,10 @@ Steer away from generalizations like "test everything", "don't test repositories
 - architectures, pattern implementations, ... often differ from project to project,
 - so-called best practices are sometimes diverted from, on purpose or accidentally.
 
-Trying to achieve 100% code coverage can be counterproductive. It's not about the number of tests, it's about the quality of tests.
+Trying to achieve 100% code coverage can be counterproductive. It's not about the number of tests. It is about the quality of tests.
 ROI from writing the last 10% might not be worth it.
 
-> A high code coverage percentage is not an indicator of success, or of code quality. A high code coverage percentage only truly represents the amount of code that is covered by tests.
+> A high code coverage percentage does not indicate success or code quality. A high code coverage percentage only truly represents the code covered by tests.
 
 Controller Types:
 
@@ -478,14 +478,14 @@ Controller Types:
 
 Introduction to testing MVC controllers.
 
-A variety of reasons can lead to choosing for thin or thick controllers, one isn't by definition better than the other.
+A variety of reasons can lead to choosing thin or thick controllers; one isn't, by definition, better than the other.
 
-Can lead to a different decision in regards to whether controllers should be unit tested or not.
+This can lead to a different decision in regard to whether controllers should be unit-tested or not.
 
 You don't always have the luxury to decide:
 
 - you may get thrown into an existing project halfway through,
-- you may need to improve reliability of an existing, finished application by writing tests.
+- you may need to improve the reliability of an existing, finished application by writing tests.
 
 Not every application is built with the same level of quality.
 
@@ -509,7 +509,7 @@ Concerns when unit testing controllers:
 - working with `HttpClient` calls in tests,
 - ...
 
-> `HttpContext` an object which encapsulates all HTTP-specific information about an individual HTTP request: a container for a single request.
+> `HttpContext` is an object that encapsulates all HTTP-specific information about an individual HTTP request: a container for a single request.
 
 Common information in `HttpContext`:
 
@@ -530,15 +530,15 @@ Unit testing middleware.
 
 Test custom middleware, not built-in middleware.
 
-Dependencies that are difficult to mock can lead towards an integration test. Mostly
-though, a unit test is advisable for middleware testing.
+Dependencies that are difficult to mock can lead to an integration test. Mostly
+though a unit test is advisable for middleware testing.
 
 Typical concerns when unit testing middleware:
 
 - mock the `HttpContext` (or use `DefaultHttpContext`),
 - handle the `RequestDelegate`.
 
-> _ASP.NET Core filter_ - a filter allows code to run before or after specific stages in the request processing pipeline.
+> _ASP.NET Core filter_ - a filter that allows code to run before or after specific stages in the request processing pipeline.
 
 Custom filters often handle cross-cutting concerns:
 
@@ -564,7 +564,7 @@ Action filters:
 Unit testing service registrations.
 
 Services are registered on ASP.NET Core's included IoC container.
-These registrations can be unit tested.
+These registrations can be unit-tested.
 
 Approach:
 
@@ -577,7 +577,7 @@ Approach:
 
 Running tests with the CLI.
 
-> _Test runner_ - the program (or maybe a third party plugin to a program) that is responsible for looking for on or more assemblies with
+> _Test runner_ - the program (or maybe a third-party plugin to a program) that is responsible for looking for one or more assemblies with
 > tests in them and activating the test frameworks that it finds in those assemblies.
 >
 > _Test framework_ - the code that has detailed knowledge of how to discover and run unit tests.
@@ -586,7 +586,7 @@ Running tests in parallel allows a set of tests to finish faster, locally and on
 
 Test runner - a runner can support running different test assemblies in parallel.
 
-Test framework - a framework can support running tests within a single assembly in parallel.
+Test framework - a framework that can support running tests within a single assembly in parallel.
 
 Running tests against multiple target frameworks.
 
@@ -604,7 +604,7 @@ Couple of things that I found interesting.
 
 Based on [this](https://learning.oreilly.com/library/view/mastering-minimal-apis/9781803237824/B17902_10.xhtml) book.
 
-To test load on a web application and tells us how many requests per second it can handle, we can use [**k6**](https://github.com/grafana/k6) tool.
+To test load on a web application and determine how many requests per second it can handle, we can use the [**k6**](https://github.com/grafana/k6) tool.
 
 Use cases for the k6 tool:
 
@@ -612,7 +612,7 @@ Use cases for the k6 tool:
 - performance and synthetic monitoring,
 - chaos and reliability testing.
 
-To install k6 tool, run the following command (provided that you are using [Chocolatey](https://chocolatey.org/)):
+To install the k6 tool, run the following command (provided that you are using [Chocolatey](https://chocolatey.org/)):
 
 ```cmd
 choco install k6
@@ -755,7 +755,7 @@ And added this project to the solution:
 dotnet sln .\hr\Hr.sln add .\hr\api_benchmark\Hr.Api.Benchmark.csproj
 ```
 
-Then I've added the following dependencies:
+Then I added the following dependencies:
 
 ```cmd
 dotnet add .\hr\api_benchmark\Hr.Api.Benchmark.csproj package BenchmarkDotNet
@@ -798,7 +798,7 @@ public class InternalEmployeesControllerBenchmark
 
 Now we can run our benchmark.
 
-First we need to start our API (I'm using Docker Compose):
+First, we need to start our API (I'm using Docker Compose):
 
 ```cmd
 docker-compose --file .\hr\docker-compose.yml --project-name hr up --build -d
@@ -811,7 +811,7 @@ cd .\hr\api_benchmark
 dotnet run --configuration Release
 ```
 
-Finally we can see the results:
+Finally, we can see the results:
 
 ```cmd
 BenchmarkDotNet v0.13.10, Windows 10 (10.0.19045.3693/22H2/2022Update)
@@ -847,7 +847,9 @@ Artifacts cleanup is finished
 
 ### How to comprehensively (E2E) test a Web API?
 
-[Here](https://youtu.be/_d8umg11YQw?si=qJbfBSpnjRUei2-o) you will find great explanation of how to test a Web API (End-to-End).
+[Here](https://youtu.be/_d8umg11YQw?si=qJbfBSpnjRUei2-o) you will find a great explanation of how to test a Web API (End-to-End).
+
+Also, please watch [this](https://youtu.be/m7r2qyUabTs?si=hTyBQvh2sCehxSXg) video.
 
 ## Summary
 
